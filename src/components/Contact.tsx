@@ -28,11 +28,9 @@ const Contact = () => {
         setTimeout(() => setStatus('idle'), 6000);
       } else {
         setStatus('error');
-        alert(result.error || 'Failed to send message');
       }
     } catch (err) {
       setStatus('error');
-      alert('Network error. Please email me directly: tusharcdry@gmail.com');
     }
   };
 
