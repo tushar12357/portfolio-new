@@ -10,9 +10,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).end('Method Not Allowed');
   }
 
-  const { name, email, subject, message } = req.body;
+  const { name, email, subject,company_name, message } = req.body;
 
-  if (!name || !email || !subject || !message) {
+  if (!name || !email || !subject || !message || !company_name) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
@@ -25,6 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       text: `
 Name: ${name}
 Email: ${email}
+Company: ${company_name}
 
 Message:
 ${message}
@@ -34,6 +35,7 @@ ${message}
           <h2 style="color: #6366f1;">New Message from Portfolio</h2>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+          <p><strong>Company:</strong> ${company_name}</p>
           <p><strong>Subject:</strong> ${subject}</p>
           <hr style="border: 1px dashed #ddd; margin: 20px 0;">
           <p><strong>Message:</strong></p>
