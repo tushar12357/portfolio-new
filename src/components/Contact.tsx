@@ -131,7 +131,7 @@ const Contact = () => {
               <input
                 type="text"
                 name="subject"
-                placeholder="Subject *"
+                placeholder="Subject"
                 required
                 className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white"
               />
