@@ -1,55 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
+// src/components/Contact.tsx
+import React, { useState } from 'react';
+import { Mail, Phone, MapPin, Send, Linkedin, Github } from 'lucide-react';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{
-    success?: boolean;
-    message?: string;
-  }>({});
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setStatus('sending');
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus({
-        success: true,
-        message: 'Your message has been sent successfully!',
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
 
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
-      });
+      const result = await res.json();
 
-      // Clear success message after 5 seconds
-      setTimeout(() => {
-        setSubmitStatus({});
-      }, 5000);
-    }, 1500);
+      if (res.ok) {
+        setStatus('success');
+        form.reset();
+        setTimeout(() => setStatus('idle'), 6000);
+      } else {
+        setStatus('error');
+        alert(result.error || 'Failed to send message');
+      }
+    } catch (err) {
+      setStatus('error');
+      alert('Network error. Please email me directly: tusharcdry@gmail.com');
+    }
   };
 
   return (
@@ -58,227 +42,73 @@ const Contact = () => {
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
         <div className="w-20 h-1 bg-gradient-to-r from-indigo-500 to-purple-600 mx-auto mb-6"></div>
         <p className="text-gray-300 max-w-2xl mx-auto">
-          Have a project in mind or want to collaborate? Feel free to reach out to me using the contact form or through my contact information.
+          Currently open for full-time roles, freelance projects, or collaboration on AI & full-stack products.
         </p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-10">
         <div className="lg:w-1/3 slide-in-left">
-          <div className="bg-gradient-to-br from-indigo-900 to-indigo-800 text-white p-8 rounded-lg shadow-lg border border-indigo-700">
-            <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
+          <div className="bg-gradient-to-br from-indigo-900 to-purple-900 p-8 rounded-lg shadow-xl border border-indigo-700">
+            <h3 className="text-2xl font-bold mb-6">Let's Connect</h3>
             <div className="space-y-6">
-              <div className="flex items-start">
-                <div className="mr-4 text-indigo-400">
-                  <Mail size={24} />
-                </div>
+              <div className="flex items-center">
+                <Mail className="mr-4 text-indigo-300" size={24} />
                 <div>
-                  <h4 className="font-medium">Email</h4>
-                  <p className="mt-1 text-gray-300">contact@example.com</p>
+                  <p className="font-medium">Email</p>
+                  <a href="mailto:tusharcdry@gmail.com" className="text-gray-300 hover:text-white">tusharcdry@gmail.com</a>
                 </div>
               </div>
-
-              <div className="flex items-start">
-                <div className="mr-4 text-indigo-400">
-                  <Phone size={24} />
-                </div>
+              <div className="flex items-center">
+                <Phone className="mr-4 text-indigo-300" size={24} />
                 <div>
-                  <h4 className="font-medium">Phone</h4>
-                  <p className="mt-1 text-gray-300">+1 (123) 456-7890</p>
+                  <p className="font-medium">Phone</p>
+                  <a href="tel:+919821985448" className="text-gray-300 hover:text-white">+91 98219 85448</a>
                 </div>
               </div>
-
-              <div className="flex items-start">
-                <div className="mr-4 text-indigo-400">
-                  <MapPin size={24} />
-                </div>
+              <div className="flex items-center">
+                <MapPin className="mr-4 text-indigo-300" size={24} />
                 <div>
-                  <h4 className="font-medium">Location</h4>
-                  <p className="mt-1 text-gray-300">San Francisco, CA</p>
+                  <p className="font-medium">Location</p>
+                  <p className="text-gray-300">Delhi, India</p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-10">
-              <h4 className="font-medium mb-4">Follow Me</h4>
-              <div className="flex space-x-4">
-                <a
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-indigo-700/50 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors duration-300 hover:scale-110"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                  </svg>
-                </a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-indigo-700/50 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors duration-300 hover:scale-110"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                    <rect x="2" y="9" width="4" height="12"></rect>
-                    <circle cx="4" cy="4" r="2"></circle>
-                  </svg>
-                </a>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-indigo-700/50 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors duration-300 hover:scale-110"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                  </svg>
-                </a>
-              </div>
+            <div className="mt-10 flex space-x-4">
+              <a href="https://linkedin.com/in/tushar-chaudhary-4a49621a3" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-indigo-800/50 rounded-full flex items-center justify-center hover:bg-indigo-700 transition hover:scale-110">
+                <Linkedin size={22} />
+              </a>
+              <a href="https://github.com/tushar12357" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-indigo-800/50 rounded-full flex items-center justify-center hover:bg-indigo-700 transition hover:scale-110">
+                <Github size={22} />
+              </a>
             </div>
           </div>
         </div>
 
         <div className="lg:w-2/3 slide-in-right">
-          <form onSubmit={handleSubmit} className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-300 mb-2"
-                >
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white"
-                  placeholder="John Doe"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-300 mb-2"
-                >
-                  Your Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white"
-                  placeholder="john@example.com"
-                />
-              </div>
+          <form onSubmit={handleSubmit} className="bg-gray-800 p-8 rounded-lg shadow-xl border border-gray-700">
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <input type="text" name="name" placeholder="Your Name" required className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white" />
+              <input type="email" name="email" placeholder="Your Email" required className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white" />
             </div>
+            <input type="text" name="subject" placeholder="Subject" required className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-md mb-6 focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white" />
+            <textarea name="message" rows={6} placeholder="Your Message" required className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-md mb-6 focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white"></textarea>
 
-            <div className="mb-6">
-              <label
-                htmlFor="subject"
-                className="block text-sm font-medium text-gray-300 mb-2"
-              >
-                Subject
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white"
-                placeholder="Project Inquiry"
-              />
-            </div>
-
-            <div className="mb-6">
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-gray-300 mb-2"
-              >
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={6}
-                value={formData.message}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white"
-                placeholder="Hello, I'd like to discuss a project..."
-              ></textarea>
-            </div>
-
-            {submitStatus.message && (
-              <div
-                className={`p-4 mb-6 rounded-md flex items-center ${
-                  submitStatus.success
-                    ? 'bg-green-900/30 text-green-400 border border-green-800'
-                    : 'bg-red-900/30 text-red-400 border border-red-800'
-                }`}
-              >
-                {submitStatus.success && <CheckCircle size={20} className="mr-2" />}
-                {submitStatus.message}
-              </div>
+            {/* Success/Error Feedback */}
+            {status === 'success' && (
+              <p className="text-green-400 font-medium mb-4 text-center">Message sent successfully! I'll reply soon</p>
+            )}
+            {status === 'error' && (
+              <p className="text-red-400 font-medium mb-4 text-center">Failed to send. Please email me directly.</p>
             )}
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="btn-primary w-full justify-center"
+            <button 
+              type="submit" 
+              disabled={status === 'sending'}
+              className="btn-primary w-full justify-center text-lg disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? (
-                <div className="flex items-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Sending...
-                </div>
-              ) : (
-                <>
-                  Send Message
-                  <Send className="ml-2" size={18} />
-                </>
-              )}
+              {status === 'sending' ? 'Sending...' : 'Send Message'} 
+              {status !== 'sending' && <Send className="ml-3" size={20} />}
             </button>
           </form>
         </div>
