@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Github, Linkedin, Mail, ChevronDown } from 'lucide-react';
+import React, { useEffect, useRef } from "react";
+import { ArrowRight, Github, Linkedin, Mail, ChevronDown } from "lucide-react";
 
 interface HeroProps {
   setActiveSection: (section: string) => void;
@@ -12,10 +12,10 @@ const Hero: React.FC<HeroProps> = ({ setActiveSection }) => {
   // Fixed, lag-free typewriter (no NodeJS.Timeout error)
   useEffect(() => {
     const titles = [
-      'MERN Stack Developer',
-      'Next.js Expert',
-      'Flutter Developer',
-      'AI Integration Specialist',
+      "MERN Stack Developer",
+      "Next.js Expert",
+      "Flutter Developer",
+      "AI Integration Specialist",
     ];
 
     let titleIndex = 0;
@@ -28,15 +28,24 @@ const Hero: React.FC<HeroProps> = ({ setActiveSection }) => {
       const currentTitle = titles[titleIndex];
 
       if (isDeleting) {
-        typingRef.current.textContent = currentTitle.substring(0, charIndex - 1);
+        typingRef.current.textContent = currentTitle.substring(
+          0,
+          charIndex - 1
+        );
         charIndex--;
       } else {
-        typingRef.current.textContent = currentTitle.substring(0, charIndex + 1);
+        typingRef.current.textContent = currentTitle.substring(
+          0,
+          charIndex + 1
+        );
         charIndex++;
       }
 
       if (!isDeleting && charIndex === currentTitle.length) {
-        timeoutId = setTimeout(() => { isDeleting = true; type(); }, 1500);
+        timeoutId = setTimeout(() => {
+          isDeleting = true;
+          type();
+        }, 1500);
       } else if (isDeleting && charIndex === 0) {
         isDeleting = false;
         titleIndex = (titleIndex + 1) % titles.length;
@@ -61,8 +70,8 @@ const Hero: React.FC<HeroProps> = ({ setActiveSection }) => {
     const particleCount = 50;
 
     for (let i = 0; i < particleCount; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'absolute rounded-full bg-indigo-500/20';
+      const particle = document.createElement("div");
+      particle.className = "absolute rounded-full bg-indigo-500/20";
 
       const size = Math.random() * 6 + 2;
       particle.style.width = `${size}px`;
@@ -70,24 +79,26 @@ const Hero: React.FC<HeroProps> = ({ setActiveSection }) => {
       particle.style.left = `${Math.random() * 100}%`;
       particle.style.top = `${Math.random() * 100}%`;
       particle.style.animationDelay = `${Math.random() * 5}s`;
-      particle.classList.add('animate-float');
+      particle.classList.add("animate-float");
 
       container.appendChild(particle);
     }
   }, []);
 
   const handleViewWorkClick = () => {
-    setActiveSection('portfolio');
-    document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+    setActiveSection("portfolio");
+    document
+      .getElementById("portfolio")
+      ?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleContactClick = () => {
-    setActiveSection('contact');
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    setActiveSection("contact");
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleScrollDown = () => {
-    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -101,7 +112,10 @@ const Hero: React.FC<HeroProps> = ({ setActiveSection }) => {
           <div className="md:w-1/2 mb-10 md:mb-0">
             <div className="slide-in-left">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-                Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">Tushar Chaudhary</span>
+                Hi, I'm{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
+                  Tushar Chaudhary
+                </span>
               </h1>
 
               <h2 className="text-2xl md:text-3xl text-gray-400 mb-6 h-8">
@@ -110,8 +124,9 @@ const Hero: React.FC<HeroProps> = ({ setActiveSection }) => {
               </h2>
 
               <p className="text-lg text-gray-300 mb-8 max-w-lg">
-                Full-stack developer specializing in MERN, Next.js, Flutter & AI integrations. 
-                Building scalable SaaS platforms, AI-driven systems, and cross-platform mobile apps.
+                Full-stack developer specializing in MERN, Next.js, Flutter & AI
+                integrations. Building scalable SaaS platforms, AI-driven
+                systems, and cross-platform mobile apps.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -124,16 +139,26 @@ const Hero: React.FC<HeroProps> = ({ setActiveSection }) => {
               </div>
 
               <div className="flex mt-8 space-x-6">
-                <a href="https://github.com/tushar12357" target="_blank" rel="noopener noreferrer"
-                   className="text-gray-400 hover:text-indigo-400 transition-all hover:scale-110">
+                <a
+                  href="https://github.com/tushar12357"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-indigo-400 transition-all hover:scale-110"
+                >
                   <Github size={28} />
                 </a>
-                <a href="https://www.linkedin.com/in/tushar-chaudhary-4a49621a3/" target="_blank" rel="noopener noreferrer"
-                   className="text-gray-400 hover:text-indigo-400 transition-all hover:scale-110">
+                <a
+                  href="https://www.linkedin.com/in/tushar-chaudhary-4a49621a3/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-indigo-400 transition-all hover:scale-110"
+                >
                   <Linkedin size={28} />
                 </a>
-                <a href="mailto:tusharcdry@gmail.com"
-                   className="text-gray-400 hover:text-indigo-400 transition-all hover:scale-110">
+                <a
+                  href="mailto:tusharcdry@gmail.com?subject=Hey%20Tushar%2C%20Let%27s%20Work%20Together!&body=Hi%20Tushar..."
+                  className="text-gray-400 hover:text-indigo-400 transition-all hover:scale-110"
+                >
                   <Mail size={28} />
                 </a>
               </div>
@@ -158,7 +183,10 @@ const Hero: React.FC<HeroProps> = ({ setActiveSection }) => {
 
       {/* Scroll down (original) */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <button onClick={handleScrollDown} className="text-gray-400 hover:text-indigo-400">
+        <button
+          onClick={handleScrollDown}
+          className="text-gray-400 hover:text-indigo-400"
+        >
           <ChevronDown size={32} />
         </button>
       </div>
