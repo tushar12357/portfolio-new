@@ -28,12 +28,12 @@ const About = () => {
             apps, and hardware-integrated solutions.
           </p>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Contributed as a founding engineer at Cymake, delivering 5+ major
+            Contributed as a founding engineer at Ravan.ai, delivering 5+ major
             projects, integrating 100+ APIs, and improving performance via
             optimized caching and architecture.
           </p>
           <p className="text-gray-300 mb-8 leading-relaxed">
-            Software Developer at Cymake — build AI products
+            Software Developer at Ravan.ai — build AI products
             end-to-end while leading product roadmap and team execution as
             Product Manager.
           </p>
@@ -59,7 +59,7 @@ const About = () => {
           </h3>
 
           <div className="timeline-container">
-            {/* Cymake */}
+            {/* Ravan.ai */}
             <div className="timeline-item fade-in">
               <div className="timeline-content">
                 <div className="flex items-start gap-4">
@@ -71,7 +71,7 @@ const About = () => {
                       Software Developer & Product Manager
                     </h4>
                     <p className="text-indigo-400">
-                      Cymake (Founding Engineer)
+                      Ravan.ai (Founding Engineer)
                     </p>
                     <p className="text-gray-400 text-sm">Jan 2025 – Present</p>
                     <p className="text-gray-300 mt-2 text-sm">
