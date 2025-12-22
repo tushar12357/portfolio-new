@@ -50,7 +50,7 @@ const Skills = () => {
         <div className="bg-gray-800 p-6 rounded-lg border border-gray-700 card-hover text-center">
           <Brain className="w-12 h-12 text-indigo-400 mx-auto mb-4" />
           <h3 className="text-xl font-bold">AI SDKs</h3>
-          <p className="text-gray-400 mt-2">OpenAI, Gemini, Claude, Retell AI, Tavus, Ultravox</p>
+          <p className="text-gray-400 mt-2">OpenAI, Gemini, Claude, Retell AI, Tavus, Ultravox,Livekit</p>
         </div>
         <div className="bg-gray-800 p-6 rounded-lg border border-gray-700 card-hover text-center">
           <Globe className="w-12 h-12 text-indigo-400 mx-auto mb-4" />
