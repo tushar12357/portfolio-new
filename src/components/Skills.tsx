@@ -11,7 +11,6 @@ const Skills = () => {
     { name: 'AI Integrations', level: 90, icon: <Brain /> },
     { name: 'API Integrations', level: 93, icon: <Globe /> },
     { name: 'Tailwind CSS', level: 95, icon: <Palette /> },
-    { name: 'Golang (Learning)', level: 55, icon: <Code /> },
   ];
 
   return (
